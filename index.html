@@ -409,6 +409,11 @@
             
             allVideos.push(originalVideo, robotVideo);
             
+            // 设置原视频播放速度为0.5倍
+            originalVideo.addEventListener('loadedmetadata', () => {
+                originalVideo.playbackRate = 0.5;
+            });
+            
             // 添加同步播放事件监听
             originalVideo.addEventListener('play', () => syncPairPlay(index));
             robotVideo.addEventListener('play', () => syncPairPlay(index));
@@ -428,6 +433,9 @@
             const robotVideo = document.getElementById(`robot-${pairIndex}`);
             
             if (originalVideo && robotVideo) {
+                // 确保原视频播放速度为0.5倍
+                originalVideo.playbackRate = 0.5;
+                
                 if (originalVideo.paused && !robotVideo.paused) {
                     originalVideo.play().catch(console.error);
                 } else if (robotVideo.paused && !originalVideo.paused) {
