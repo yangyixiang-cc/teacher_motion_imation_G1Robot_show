@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教师动作G1机器人模仿展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Georgia', 'SimSun', serif;
+            background: #ffffff;
+            line-height: 1.7;
+            color: #2c2c2c;
+            font-size: 16px;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 60px 0 50px;
+            border-bottom: 1px solid #d0d0d0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #1a1a1a;
+            font-size: 2.4em;
+            font-weight: 400;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .header p {
+            color: #666666;
+            font-size: 1.1em;
+            font-style: italic;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .header .description {
+            max-width: 720px;
+            margin: 0 auto;
+            color: #444444;
+            font-size: 1em;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            color: #1a1a1a;
+            font-size: 2.0em;
+            font-weight: 400;
+            margin-bottom: 20px;
+            letter-spacing: 0.3px;
+        }
+
+        .section-title p {
+            color: #666666;
+            font-size: 1.05em;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .video-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            margin-bottom: 50px;
+        }
+
+        .section-group {
+            margin-bottom: 70px;
+        }
+
+        .section-group h3 {
+            color: #1a1a1a;
+            font-size: 1.6em;
+            font-weight: 500;
+            margin-bottom: 30px;
+            text-align: left;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e0e0e0;
+            position: relative;
+        }
+
+        .section-group h3::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: #333333;
+        }
+
+        .success-section h3 {
+            color: #2d5a2d;
+        }
+
+        .success-section h3::before {
+            background: #2d5a2d;
+        }
+
+        .failure-section h3 {
+            color: #8b2635;
+        }
+
+        .failure-section h3::before {
+            background: #8b2635;
+        }
+
+        .video-pair {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e5e5e5;
+            transition: all 0.3s ease;
+        }
+
+        .video-pair:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            border-color: #d0d0d0;
+        }
+
+        .failure-case {
+            border-left: 3px solid #8b2635;
+            background: #fefafa;
+        }
+
+        .failure-case .video-pair-title h3 {
+            color: #8b2635;
+        }
+
+        .failure-case .category {
+            background: #f8f0f0;
+            color: #8b2635;
+            border: 1px solid #e8d5d5;
+        }
+
+        .video-pair-title {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .video-pair-title h3 {
+            color: #1a1a1a;
+            font-size: 1.25em;
+            font-weight: 500;
+            margin-bottom: 8px;
+            letter-spacing: 0.2px;
+        }
+
+        .video-pair-title .category {
+            color: #555555;
+            font-size: 0.85em;
+            background: #f5f5f5;
+            padding: 5px 14px;
+            border-radius: 12px;
+            display: inline-block;
+            border: 1px solid #e0e0e0;
+            font-weight: 400;
+        }
+
+        .video-comparison {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .video-section {
+            text-align: center;
+        }
+
+        .video-section h4 {
+            color: #333333;
+            font-size: 0.95em;
+            font-weight: 500;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .video-wrapper {
+            position: relative;
+            background: #000;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+            width: 100%;
+            aspect-ratio: 16/9;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
+            background: #000;
+        }
+
+
+        @media (max-width: 1000px) {
+            .video-gallery {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .container {
+                padding: 0 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 0 35px;
+            }
+            
+            .header h1 {
+                font-size: 2.0em;
+            }
+            
+            .header p {
+                font-size: 1.0em;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .video-pair {
+                padding: 25px 20px;
+            }
+
+            .section-group h3 {
+                font-size: 1.4em;
+                text-align: center;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>教师动作G1机器人模仿展示</h1>
+        <p>Teacher Motion Imitation on G1 Robot - Comprehensive Results</p>
+        <div class="description">
+            本系统展示了基于视频的教师动作识别与G1人形机器人模仿技术的研究成果。
+            通过对比原始教师视频与机器人模仿视频，展现了动作迁移学习的效果。
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section-title">
+            <h2>实验结果展示</h2>
+            <p>以下展示了不同场景下教师动作与G1机器人模仿的对比效果</p>
+        </div>
+
+        <div class="section-group success-section">
+            <h3>成功案例</h3>
+            <div class="video-gallery" id="successGallery">
+                <!-- 成功案例将通过JavaScript动态生成 -->
+            </div>
+        </div>
+
+        <div class="section-group failure-section">
+            <h3>失败案例 - 机器人跌倒</h3>
+            <div class="video-gallery" id="failureGallery">
+                <!-- 失败案例将通过JavaScript动态生成 -->
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 成功案例数据配置
+        const successVideoData = [
+            { name: 'classroom_man_01', title: '课堂男教师 01', category: '课堂教学' },
+            { name: 'classroom_man_02', title: '课堂男教师 02', category: '课堂教学' },
+            { name: 'classroom_man_03', title: '课堂男教师 03', category: '课堂教学' },
+            { name: 'classroom_man_04', title: '课堂男教师 04', category: '课堂教学' },
+            { name: 'classroom_man_05', title: '课堂男教师 05', category: '课堂教学' },
+            { name: 'classroom_man_06', title: '课堂男教师 06', category: '课堂教学' },
+            { name: 'hubei_qingjiao_man_01', title: '湖北青教男教师 01', category: '教学比赛' },
+            { name: 'hubei_qingjiao_man_02', title: '湖北青教男教师 02', category: '教学比赛' },
+            { name: 'hubei_qingjiao_man_03', title: '湖北青教男教师 03', category: '教学比赛' },
+            { name: 'hubei_qingjiao_man_04', title: '湖北青教男教师 04', category: '教学比赛' },
+            { name: 'hubei_qingjiao_woman_01', title: '湖北青教女教师 01', category: '教学比赛' },
+            { name: 'hubei_qingjiao_woman_02', title: '湖北青教女教师 02', category: '教学比赛' },
+            { name: 'hubei_qingjiao_woman_03', title: '湖北青教女教师 03', category: '教学比赛' },
+            { name: 'hubei_qingjiao_woman_04', title: '湖北青教女教师 04', category: '教学比赛' },
+            { name: 'hubei_qingjiao_woman_05', title: '湖北青教女教师 05', category: '教学比赛' },
+            { name: 'hubei_qingjiao_woman_06', title: '湖北青教女教师 06', category: '教学比赛' },
+            { name: 'teacher_woman_01', title: 'B站教学视频-女教师 01', category: '一般教学' },
+            { name: 'teacher_woman_02', title: 'B站教学视频-女教师 02', category: '一般教学' }
+        ];
+
+        // 失败案例数据配置
+        const failureVideoData = [
+            { name: 'classroom_man_long_02', title: '课堂男教师长视频', category: '长时间教学', reason: '长时间动作导致机器人疲劳跌倒' },
+            { name: 'sport_woman_01', title: '体育-广播体操女教师 01', category: '体育教学', reason: '大幅度体育动作导致机器人失衡跌倒' }
+        ];
+
+        let allVideos = [];
+        let isMuted = false;
+
+        // 初始化页面
+        window.addEventListener('DOMContentLoaded', function() {
+            generateSuccessGallery();
+            generateFailureGallery();
+        });
+
+        function generateSuccessGallery() {
+            const successGallery = document.getElementById('successGallery');
+            
+            successVideoData.forEach((video, index) => {
+                const videoPair = createVideoPair(video, index, false);
+                successGallery.appendChild(videoPair);
+            });
+        }
+
+        function generateFailureGallery() {
+            const failureGallery = document.getElementById('failureGallery');
+            
+            failureVideoData.forEach((video, index) => {
+                const videoPair = createVideoPair(video, index + successVideoData.length, true);
+                failureGallery.appendChild(videoPair);
+            });
+        }
+
+        function createVideoPair(video, index, isFailure) {
+            const videoPair = document.createElement('div');
+            videoPair.className = isFailure ? 'video-pair failure-case' : 'video-pair';
+            videoPair.id = `video-pair-${index}`;
+            
+            const reasonText = isFailure && video.reason ? `<div style="color: #dc3545; font-size: 0.9em; margin-top: 8px; font-style: italic;">${video.reason}</div>` : '';
+            
+            videoPair.innerHTML = `
+                <div class="video-pair-title">
+                    <h3>${video.title}</h3>
+                    <span class="category">${video.category}</span>
+                    ${reasonText}
+                </div>
+                <div class="video-comparison">
+                    <div class="video-section">
+                        <h4>Original Teacher Video</h4>
+                        <div class="video-wrapper">
+                            <video 
+                                id="original-${index}" 
+                                controls 
+                                preload="metadata"
+                                data-pair="${index}"
+                                data-type="original">
+                                <source src="./raw/${video.name}_raw.mp4" type="video/mp4">
+                                您的浏览器不支持视频播放。
+                            </video>
+                        </div>
+                    </div>
+                    
+                    <div class="video-section">
+                        <h4>G1 Robot Imitation</h4>
+                        <div class="video-wrapper">
+                            <video 
+                                id="robot-${index}" 
+                                controls 
+                                preload="metadata"
+                                data-pair="${index}"
+                                data-type="robot">
+                                <source src="./raw/${video.name}_g1.mp4" type="video/mp4">
+                                您的浏览器不支持视频播放。
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // 收集所有视频元素
+            const originalVideo = videoPair.querySelector(`#original-${index}`);
+            const robotVideo = videoPair.querySelector(`#robot-${index}`);
+            
+            allVideos.push(originalVideo, robotVideo);
+            
+            // 添加同步播放事件监听
+            originalVideo.addEventListener('play', () => syncPairPlay(index));
+            robotVideo.addEventListener('play', () => syncPairPlay(index));
+            
+            originalVideo.addEventListener('pause', () => syncPairPause(index));
+            robotVideo.addEventListener('pause', () => syncPairPause(index));
+            
+            // 添加时间同步
+            originalVideo.addEventListener('seeked', () => syncPairTime(index, 'original'));
+            robotVideo.addEventListener('seeked', () => syncPairTime(index, 'robot'));
+            
+            return videoPair;
+        }
+
+        function syncPairPlay(pairIndex) {
+            const originalVideo = document.getElementById(`original-${pairIndex}`);
+            const robotVideo = document.getElementById(`robot-${pairIndex}`);
+            
+            if (originalVideo && robotVideo) {
+                if (originalVideo.paused && !robotVideo.paused) {
+                    originalVideo.play().catch(console.error);
+                } else if (robotVideo.paused && !originalVideo.paused) {
+                    robotVideo.play().catch(console.error);
+                }
+            }
+        }
+
+        function syncPairPause(pairIndex) {
+            const originalVideo = document.getElementById(`original-${pairIndex}`);
+            const robotVideo = document.getElementById(`robot-${pairIndex}`);
+            
+            if (originalVideo && robotVideo) {
+                if (!originalVideo.paused && robotVideo.paused) {
+                    originalVideo.pause();
+                } else if (!robotVideo.paused && originalVideo.paused) {
+                    robotVideo.pause();
+                }
+            }
+        }
+
+        function syncPairTime(pairIndex, sourceType) {
+            const originalVideo = document.getElementById(`original-${pairIndex}`);
+            const robotVideo = document.getElementById(`robot-${pairIndex}`);
+            
+            if (originalVideo && robotVideo) {
+                if (sourceType === 'original' && Math.abs(robotVideo.currentTime - originalVideo.currentTime) > 0.5) {
+                    robotVideo.currentTime = originalVideo.currentTime;
+                } else if (sourceType === 'robot' && Math.abs(originalVideo.currentTime - robotVideo.currentTime) > 0.5) {
+                    originalVideo.currentTime = robotVideo.currentTime;
+                }
+            }
+        }
+
+
+
+        // 页面可见性API - 当页面不可见时暂停所有视频
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                allVideos.forEach(video => {
+                    if (video && !video.paused) {
+                        video.pause();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
